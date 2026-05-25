@@ -30,40 +30,38 @@ public class WelcomeFrame extends JFrame {
         subtitle.setPreferredSize(subtitle.getPreferredSize());
         subtitle.setForeground(Color.DARK_GRAY);
 
-        loginButton = new JButton("Login");
-        registerButton = new JButton("Register");
-        exitButton = new JButton("Exit");
-
         Dimension buttonSize = new Dimension(180, 40);
 
+        loginButton = new JButton("Login");
         loginButton.setMaximumSize(buttonSize);
-        registerButton.setMaximumSize(buttonSize);
-        exitButton.setMaximumSize(buttonSize);
-
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginButton.addActionListener(
+                e -> {
+                    new LoginFrame();
+                });
+
+        registerButton = new JButton("Register");
+        registerButton.setMaximumSize(buttonSize);
         registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        registerButton.addActionListener(
+                e -> {
+                    new RegisterFrame();
+                });
+
+        exitButton = new JButton("Exit");
+        exitButton.setMaximumSize(buttonSize);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         mainPanel.add(Box.createVerticalGlue());
-
         mainPanel.add(title);
-
         mainPanel.add(Box.createVerticalStrut(10));
-
         mainPanel.add(subtitle);
-
         mainPanel.add(Box.createVerticalStrut(35));
-
         mainPanel.add(loginButton);
-
         mainPanel.add(Box.createVerticalStrut(20));
-
         mainPanel.add(registerButton);
-
         mainPanel.add(Box.createVerticalStrut(20));
-
         mainPanel.add(exitButton);
-
         mainPanel.add(Box.createVerticalGlue());
 
         add(mainPanel);
