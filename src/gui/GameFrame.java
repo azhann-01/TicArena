@@ -139,23 +139,20 @@ public class GameFrame extends JFrame {
         // Rows
 
         for (int i = 0; i < 5; i++) {
-
             String first = board[i][0].getText();
-
+            
             if (first.equals(""))
                 continue;
 
             boolean same = true;
 
             for (int j = 1; j < 5; j++) {
-
                 if (!board[i][j].getText().equals(first)) {
-
-                    same = false;
+                    same = false;                   
                     break;
                 }
             }
-
+            
             if (same) {
                 gameOver = true;
                 JOptionPane.showMessageDialog(this, first + " Wins!");
@@ -167,9 +164,8 @@ public class GameFrame extends JFrame {
         // Columns
 
         for (int j = 0; j < 5; j++) {
-
             String first = board[0][j].getText();
-
+            
             if (first.equals(""))
                 continue;
 
@@ -218,7 +214,6 @@ public class GameFrame extends JFrame {
         first = board[0][4].getText();
 
         if (!first.equals("")) {
-
             boolean same = true;
 
             for (int i = 1; i < 5; i++) {
