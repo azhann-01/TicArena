@@ -42,7 +42,7 @@ public class GameFrame extends JFrame {
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        turnLabel = new JLabel("Current Turn : X");
+        turnLabel = new JLabel("🎯 Your Turn");
         turnLabel.setFont(new Font("Arial", Font.BOLD, 18));
         turnLabel.setForeground(Color.WHITE);
         turnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -89,14 +89,18 @@ public class GameFrame extends JFrame {
                             xTurn = !xTurn;
 
                             if (xTurn) {
-                                turnLabel.setText("Current Turn : X");
+                                turnLabel.setText("🎯 Your Turn");
                             } else {
-                                turnLabel.setText("Current Turn : O");
+                                turnLabel.setText("🤖 AI Turn");
                             }
                             checkWinner();
 
                             if (!gameOver && aiMode && !xTurn) {
-                                makeAIMove();
+                                turnLabel.setText("🤖 AI Turn");
+
+                                Timer timer = new Timer(1000, e2 -> makeAIMove());
+                                timer.setRepeats(false);
+                                timer.start();
                             }
                         });
 
@@ -168,11 +172,10 @@ public class GameFrame extends JFrame {
 
                 if (first.equals("X")) {
                     new UserDAO().addWin(username);
-                }
-                else {
+                } else {
                     new UserDAO().addLoss(username);
                 }
-                
+
                 JOptionPane.showMessageDialog(this, first + " Wins!");
 
                 disableBoard();
@@ -199,11 +202,10 @@ public class GameFrame extends JFrame {
 
             if (same) {
                 gameOver = true;
-                
+
                 if (first.equals("X")) {
                     new UserDAO().addWin(username);
-                }
-                else {
+                } else {
                     new UserDAO().addLoss(username);
                 }
 
@@ -234,8 +236,7 @@ public class GameFrame extends JFrame {
 
                 if (first.equals("X")) {
                     new UserDAO().addWin(username);
-                }
-                else {
+                } else {
                     new UserDAO().addLoss(username);
                 }
 
@@ -265,8 +266,7 @@ public class GameFrame extends JFrame {
 
                 if (first.equals("X")) {
                     new UserDAO().addWin(username);
-                }
-                else {
+                } else {
                     new UserDAO().addLoss(username);
                 }
 
@@ -311,7 +311,7 @@ public class GameFrame extends JFrame {
                         board[i][j].setEnabled(false);
                         xTurn = true;
 
-                        turnLabel.setText("Current Turn : X");
+                        turnLabel.setText("🎯 Your Turn");
 
                         checkWinner();
                         return;
@@ -331,7 +331,7 @@ public class GameFrame extends JFrame {
 
                         xTurn = true;
 
-                        turnLabel.setText("Current Turn : X");
+                        turnLabel.setText("🎯 Your Turn");
 
                         checkWinner();
                         return;
@@ -365,7 +365,7 @@ public class GameFrame extends JFrame {
 
         xTurn = true;
 
-        turnLabel.setText("Current Turn : X");
+        turnLabel.setText("🎯 Your Turn");
 
         checkWinner();
     }
