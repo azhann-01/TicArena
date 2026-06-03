@@ -15,6 +15,7 @@ public class GameFrame extends JFrame {
 
     String username;
 
+    boolean aiMode = true;
     boolean xTurn = true;
     boolean gameOver = false;
 
@@ -28,7 +29,7 @@ public class GameFrame extends JFrame {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        //top panel
+        // top panel
 
         JPanel topPanel = new JPanel();
         topPanel.setBackground(new Color(44, 62, 80));
@@ -50,7 +51,7 @@ public class GameFrame extends JFrame {
         topPanel.add(turnLabel);
         topPanel.add(Box.createVerticalStrut(10));
 
-        //board panel
+        // board panel
 
         JPanel boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(5, 5, 5, 5));
@@ -67,67 +68,70 @@ public class GameFrame extends JFrame {
                 board[i][j].setBackground(new Color(236, 240, 241));
                 board[i][j].setForeground(new Color(44, 62, 80));
                 board[i][j].setFocusPainted(false);
-                board[i][j].setBorder(BorderFactory.createLineBorder(new Color(52, 73, 94),2));
+                board[i][j].setBorder(BorderFactory.createLineBorder(new Color(52, 73, 94), 2));
 
                 int row = i;
                 int col = j;
 
                 board[i][j].addActionListener(
-                    e -> {
-                        if (gameOver)
-                            return;
-                        if (xTurn) {
-                            board[row][col].setText("X");
-                        } else {
-                            board[row][col].setText("O");
-                        }
-                        board[row][col].setEnabled(false);
+                        e -> {
+                            if (gameOver)
+                                return;
+                            if (xTurn) {
+                                board[row][col].setText("X");
+                            } else {
+                                board[row][col].setText("O");
+                            }
+                            board[row][col].setEnabled(false);
 
-                        xTurn = !xTurn;
+                            xTurn = !xTurn;
 
-                        if (xTurn) {
-                            turnLabel.setText("Current Turn : X");
-                        } else {
-                            turnLabel.setText("Current Turn : O");
-                        }
-                        checkWinner();
+                            if (xTurn) {
+                                turnLabel.setText("Current Turn : X");
+                            } else {
+                                turnLabel.setText("Current Turn : O");
+                            }
+                            checkWinner();
+
+                            if (!gameOver && aiMode && !xTurn){
+                                makeAIMove();
+                            }
                         });
 
                 boardPanel.add(board[i][j]);
             }
         }
 
-        //button panel
+        // button panel
 
         JPanel buttonPanel = new JPanel();
-        
+
         restartButton = new JButton("Restart Game");
         restartButton.setBackground(new Color(52, 152, 219));
         restartButton.setForeground(Color.WHITE);
         restartButton.setFocusPainted(false);
         restartButton.setFont(new Font("Arial", Font.BOLD, 16));
         restartButton.addActionListener(
-            e -> {
-                dispose();
-                new GameFrame(username);
-            });
+                e -> {
+                    dispose();
+                    new GameFrame(username);
+                });
 
-        
         lobbyButton = new JButton("Back To Lobby");
         lobbyButton.setBackground(new Color(46, 204, 113));
         lobbyButton.setForeground(Color.WHITE);
         lobbyButton.setFocusPainted(false);
         lobbyButton.setFont(new Font("Arial", Font.BOLD, 16));
         lobbyButton.addActionListener(
-            e-> {
-                new LobbyFrame(username);
-                dispose();
-            });
+                e -> {
+                    new LobbyFrame(username);
+                    dispose();
+                });
 
         buttonPanel.add(restartButton);
         buttonPanel.add(lobbyButton);
 
-        //main Layout
+        // main Layout
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(boardPanel, BorderLayout.CENTER);
@@ -144,7 +148,7 @@ public class GameFrame extends JFrame {
 
         for (int i = 0; i < 5; i++) {
             String first = board[i][0].getText();
-            
+
             if (first.equals(""))
                 continue;
 
@@ -152,11 +156,11 @@ public class GameFrame extends JFrame {
 
             for (int j = 1; j < 5; j++) {
                 if (!board[i][j].getText().equals(first)) {
-                    same = false;                   
+                    same = false;
                     break;
                 }
             }
-            
+
             if (same) {
                 gameOver = true;
                 new UserDAO().addWin(username);
@@ -170,7 +174,7 @@ public class GameFrame extends JFrame {
 
         for (int j = 0; j < 5; j++) {
             String first = board[0][j].getText();
-            
+
             if (first.equals(""))
                 continue;
 
@@ -178,17 +182,17 @@ public class GameFrame extends JFrame {
 
             for (int i = 1; i < 5; i++) {
                 if (!board[i][j].getText().equals(first)) {
-                    same = false;                   
+                    same = false;
                     break;
                 }
             }
 
             if (same) {
-            gameOver = true;
-            new UserDAO().addWin(username);
-            JOptionPane.showMessageDialog(this, first + " Wins!");
-            disableBoard();
-            return;
+                gameOver = true;
+                new UserDAO().addWin(username);
+                JOptionPane.showMessageDialog(this, first + " Wins!");
+                disableBoard();
+                return;
             }
         }
 
@@ -202,8 +206,8 @@ public class GameFrame extends JFrame {
 
             for (int i = 1; i < 5; i++) {
                 if (!board[i][i].getText().equals(first)) {
-                same = false;               
-                break;
+                    same = false;
+                    break;
                 }
             }
 
@@ -258,6 +262,24 @@ public class GameFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Game Over! It's a Draw.");
 
             disableBoard();
+        }
+    }
+
+    public void makeAIMove() {
+        
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (board[i][j].getText().equals("")) {
+                    board[i][j].setText("O");                   
+                    board[i][j].setEnabled(false);
+
+                    xTurn = true;
+                    turnLabel.setText("Current Turn : X");
+
+                    checkWinner();
+                    return;
+                }
+            }
         }
     }
 
