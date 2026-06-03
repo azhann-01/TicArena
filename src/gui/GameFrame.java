@@ -165,8 +165,16 @@ public class GameFrame extends JFrame {
 
             if (same) {
                 gameOver = true;
-                new UserDAO().addWin(username);
+
+                if (first.equals("X")) {
+                    new UserDAO().addWin(username);
+                }
+                else {
+                    new UserDAO().addLoss(username);
+                }
+                
                 JOptionPane.showMessageDialog(this, first + " Wins!");
+
                 disableBoard();
                 return;
             }
@@ -191,8 +199,16 @@ public class GameFrame extends JFrame {
 
             if (same) {
                 gameOver = true;
-                new UserDAO().addWin(username);
+                
+                if (first.equals("X")) {
+                    new UserDAO().addWin(username);
+                }
+                else {
+                    new UserDAO().addLoss(username);
+                }
+
                 JOptionPane.showMessageDialog(this, first + " Wins!");
+
                 disableBoard();
                 return;
             }
@@ -215,8 +231,16 @@ public class GameFrame extends JFrame {
 
             if (same) {
                 gameOver = true;
-                new UserDAO().addWin(username);
+
+                if (first.equals("X")) {
+                    new UserDAO().addWin(username);
+                }
+                else {
+                    new UserDAO().addLoss(username);
+                }
+
                 JOptionPane.showMessageDialog(this, first + " Wins!");
+
                 disableBoard();
                 return;
             }
@@ -238,8 +262,16 @@ public class GameFrame extends JFrame {
 
             if (same) {
                 gameOver = true;
-                new UserDAO().addWin(username);
+
+                if (first.equals("X")) {
+                    new UserDAO().addWin(username);
+                }
+                else {
+                    new UserDAO().addLoss(username);
+                }
+
                 JOptionPane.showMessageDialog(this, first + " Wins!");
+
                 disableBoard();
                 return;
             }
@@ -269,7 +301,7 @@ public class GameFrame extends JFrame {
 
     public void makeAIMove() {
 
-        //Step 1: Can AI win?
+        // Step 1: Can AI win?
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -287,7 +319,7 @@ public class GameFrame extends JFrame {
                 }
             }
         }
-        
+
         // Step 2: Block player's winning move
 
         for (int i = 0; i < 5; i++) {
