@@ -1,5 +1,6 @@
 package gui;
 
+import database.UserDAO;
 import java.awt.*;
 import javax.swing.*;
 
@@ -12,10 +13,13 @@ public class GameFrame extends JFrame {
 
     JLabel turnLabel;
 
+    String username;
+
     boolean xTurn = true;
     boolean gameOver = false;
 
     public GameFrame(String username) {
+        this.username = username;
 
         setTitle("TicArena - Game");
         setSize(650, 700);
@@ -155,6 +159,7 @@ public class GameFrame extends JFrame {
             
             if (same) {
                 gameOver = true;
+                new UserDAO().addWin(username);
                 JOptionPane.showMessageDialog(this, first + " Wins!");
                 disableBoard();
                 return;
@@ -180,6 +185,7 @@ public class GameFrame extends JFrame {
 
             if (same) {
             gameOver = true;
+            new UserDAO().addWin(username);
             JOptionPane.showMessageDialog(this, first + " Wins!");
             disableBoard();
             return;
@@ -203,6 +209,7 @@ public class GameFrame extends JFrame {
 
             if (same) {
                 gameOver = true;
+                new UserDAO().addWin(username);
                 JOptionPane.showMessageDialog(this, first + " Wins!");
                 disableBoard();
                 return;
@@ -225,6 +232,7 @@ public class GameFrame extends JFrame {
 
             if (same) {
                 gameOver = true;
+                new UserDAO().addWin(username);
                 JOptionPane.showMessageDialog(this, first + " Wins!");
                 disableBoard();
                 return;
@@ -246,6 +254,7 @@ public class GameFrame extends JFrame {
 
         if (boardFull) {
             gameOver = true;
+            new UserDAO().addDraw(username);
             JOptionPane.showMessageDialog(this, "Game Over! It's a Draw.");
 
             disableBoard();

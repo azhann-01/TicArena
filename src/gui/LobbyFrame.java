@@ -5,8 +5,7 @@ import javax.swing.*;
 
 public class LobbyFrame extends JFrame {
 
-    JButton findMatchButton;
-    JButton friendButton;
+    JButton playAIButton;
     JButton leaderboardButton;
     JButton logoutButton;
 
@@ -24,27 +23,29 @@ public class LobbyFrame extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 35));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel welcome = new JLabel("Welcome, " + username);
+        JLabel welcome = new JLabel("Ready for a challenge, " + username + "?");
         welcome.setFont(new Font("Arial", Font.PLAIN, 15));
         welcome.setForeground(Color.DARK_GRAY);
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         Dimension buttonSize = new Dimension(180, 40);
 
-        findMatchButton = new JButton("Find Match");
-        findMatchButton.addActionListener(
+        playAIButton = new JButton("Play With AI");
+        playAIButton.addActionListener(
                 e -> {
-                    new WaitingRoomFrame(username);
+                    new GameFrame(username);
                     dispose();
                 });
 
-        friendButton = new JButton("Play With Friend");
-
         leaderboardButton = new JButton("Leaderboard");
+        leaderboardButton.addActionListener(
+            e -> {
+                new LeaderboardFrame();
+            });
 
         logoutButton = new JButton("Logout");
 
-        JButton buttons[] = { findMatchButton, friendButton, leaderboardButton, logoutButton };
+        JButton buttons[] = { playAIButton, leaderboardButton, logoutButton };
 
         for (JButton b : buttons) {
             b.setMaximumSize(buttonSize);
@@ -61,9 +62,7 @@ public class LobbyFrame extends JFrame {
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(welcome);
         mainPanel.add(Box.createVerticalStrut(40));
-        mainPanel.add(findMatchButton);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(friendButton);
+        mainPanel.add(playAIButton);
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(leaderboardButton);
         mainPanel.add(Box.createVerticalStrut(15));
